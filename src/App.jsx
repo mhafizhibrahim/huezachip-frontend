@@ -32,12 +32,14 @@ function App() {
   const spinInterval = useRef(null);
 
   // Inisialisasi Discord SDK
+ // Inisialisasi Discord SDK untuk mengambil profil asli
   useEffect(() => {
     const setupDiscord = async () => {
       try {
         await discordSdk.ready();
         console.log("Discord SDK Ready!");
-        // Otorisasi otomatis untuk mengambil profil Discord pengguna
+        
+        // Meminta otorisasi dari Discord
         const { code } = await discordSdk.commands.authorize({
           client_id: '1563451174055579698',
           response_type: "code",
@@ -45,11 +47,15 @@ function App() {
           prompt: "none",
           scope: ["identify", "guilds"]
         });
-        
-        // (Nanti di tahap berikutnya kita tukar 'code' ini di backend untuk ID aslinya)
-        setUserName("Player " + Math.floor(Math.random() * 1000)); 
+
+        // Mengambil data profil pengguna yang sedang login di Discord
+        let auth = await discordSdk.commands.authenticate({ code });
+        if (auth && auth.user) {
+          setUserName(auth.user.username); // Mengubah 'NightRider' menjadi nama asli Discord!
+          setUserId(auth.user.id);         // Menggunakan ID Discord asli untuk Supabase/Database
+        }
       } catch (e) {
-        console.log("Berjalan di browser biasa, bukan Discord.");
+        console.log("Berjalan di browser biasa atau gagal memuat Discord SDK:", e);
       }
     };
     setupDiscord();
