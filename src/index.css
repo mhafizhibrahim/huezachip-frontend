@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0A0516;
+  color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar bergaya Casino */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0516;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A104E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8B31FF;
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(233, 34, 255, 0.5);
+}
+.glow-gold {
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
+}
+
+/* Efek Blur saat mesin berputar */
+.spin-blur {
+  filter: blur(4px);
+  transform: scale(1.02);
+  transition: all 0.1s ease;
+}
